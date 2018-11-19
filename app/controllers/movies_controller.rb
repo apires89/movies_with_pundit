@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.all
+    @movies = policy_scope(Movie).all
   end
 
   # GET /movies/1
@@ -14,7 +14,8 @@ class MoviesController < ApplicationController
 
   # GET /movies/new
   def new
-    @movie = Movie.new
+    @movie = policy_scope(Movie).new
+    authorize @movie
   end
 
   # GET /movies/1/edit
@@ -24,7 +25,8 @@ class MoviesController < ApplicationController
   # POST /movies
   # POST /movies.json
   def create
-    @movie = Movie.new(movie_params)
+    @movie = policy_scope(Movie).new(movie_params)
+    authorize @movie
 
     respond_to do |format|
       if @movie.save
@@ -65,6 +67,7 @@ class MoviesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
       @movie = Movie.find(params[:id])
+      authorize @movie
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
