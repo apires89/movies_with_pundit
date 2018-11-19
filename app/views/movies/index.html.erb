@@ -15,9 +15,8 @@
   <tbody>
     <% @movies.each do |movie| %>
       <tr>
-        <td><%= movie.name %></td>
+        <td><%= movie.title %></td>
         <td><%= movie.rank %></td>
-        <td><%= movie.user %></td>
         <td><%= link_to 'Show', movie %></td>
         <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
         <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
