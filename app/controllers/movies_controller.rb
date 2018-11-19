@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = policy_scope(Movie).all
+    @movies = policy_scope(Movie).order(rank: :asc)
   end
 
   # GET /movies/1
@@ -26,6 +26,7 @@ class MoviesController < ApplicationController
   # POST /movies.json
   def create
     @movie = policy_scope(Movie).new(movie_params)
+    @movie.user = current_user
     authorize @movie
 
     respond_to do |format|
@@ -72,6 +73,6 @@ class MoviesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
-      params.require(:movie).permit(:name, :rank, :user_id)
+      params.require(:movie).permit(:title, :rank, :user_id)
     end
 end
